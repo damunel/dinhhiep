@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nguyễn Đình Hiệp - Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a472a 0%, #0f2818 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(10, 20, 15, 0.95);
+            padding: 1.5rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        nav button {
+            background: none;
+            border: 2px solid #10d981;
+            color: #10d981;
+            padding: 0.75rem 1.5rem;
+            cursor: pointer;
+            font-size: 1rem;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        nav button:hover {
+            background: #10d981;
+            color: #0a1410;
+            transform: translateY(-2px);
+        }
+
+        nav button.active {
+            background: #10d981;
+            color: #0a1410;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            min-height: calc(100vh - 100px);
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+            opacity: 0;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+            opacity: 1;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ABOUT TAB */
+        .about-section {
+            background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);
+            border-radius: 15px;
+            padding: 3rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .about-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .about-header h1 {
+            font-size: 2.5rem;
+            color: #1a472a;
+            margin-bottom: 0.5rem;
+        }
+
+        .about-header p {
+            font-size: 1.1rem;
+            color: #0f2818;
+            font-weight: 500;
+        }
+
+        .about-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .info-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            border-left: 4px solid #10d981;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .info-card h3 {
+            color: #1a472a;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .info-card p {
+            color: #0f2818;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .about-description {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            line-height: 1.8;
+            color: #333;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* CONTACT TAB */
+        .contact-section {
+            background: linear-gradient(135deg, #0f2818 0%, #1a472a 100%);
+            border-radius: 15px;
+            padding: 3rem;
+            text-align: center;
+        }
+
+        .contact-header {
+            color: white;
+            margin-bottom: 2rem;
+        }
+
+        .contact-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-header p {
+            font-size: 1.1rem;
+            color: #a7f3d0;
+        }
+
+        .contact-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .contact-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 10px;
+            border: 2px solid #10d981;
+            transition: all 0.3s ease;
+        }
+
+        .contact-card:hover {
+            background: rgba(16, 217, 129, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .contact-card h3 {
+            color: #10d981;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .contact-card a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: #10d981;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            color: #0a1410;
+        }
+
+        .contact-card a:hover {
+            background: #06d575;
+            transform: scale(1.05);
+        }
+
+        /* SONGS TAB */
+        .songs-section {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-radius: 15px;
+            padding: 3rem;
+        }
+
+        .songs-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .songs-header h1 {
+            font-size: 2.5rem;
+            color: #92400e;
+            margin-bottom: 0.5rem;
+        }
+
+        .songs-header p {
+            font-size: 1.1rem;
+            color: #000000;
+        }
+
+        .songs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .song-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .song-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        
+        .song-image {
+            width: 100%;
+            height: 280px;
+            background: linear-gradient(135deg, #f0f0f0 0%, #e8e8e8 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-weight: 600;
+            text-align: center;
+            padding: 1rem;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .song-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            background: white;
+        }
+
+        .song-info {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .song-info h3 {
+            color: #92400e;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .song-info p {
+            color: #b45309;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+
+        .song-source {
+            background: #fef3c7;
+            padding: 0.75rem;
+            border-radius: 5px;
+            color: #92400e;
+            text-align: center;
+            font-weight: 600;
+            min-height: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #d97706;
+        }
+
+       
+        .song-player {
+            width: 100%;
+            margin-top: auto;
+            padding: 0.75rem;
+            background: #fef3c7;
+            border-radius: 5px;
+            border: 2px solid #d97706;
+        }
+
+        audio {
+            width: 100%;
+            height: 30px;
+            cursor: pointer;
+        }
+
+        
+        footer {
+            background: rgba(10, 20, 15, 0.95);
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            nav ul {
+                gap: 1rem;
+            }
+
+            .about-section,
+            .contact-section,
+            .songs-section {
+                padding: 1.5rem;
+            }
+
+            .about-header h1,
+            .contact-header h1,
+            .songs-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .songs-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <nav>
+        <ul>
+            <li><button class="tab-btn active" data-tab="about">About</button></li>
+            <li><button class="tab-btn" data-tab="contact">Contact</button></li>
+            <li><button class="tab-btn" data-tab="songs">Favorite Songs</button></li>
+        </ul>
+    </nav>
+
+  
+    <div class="container">
+  
+        <div id="about" class="tab-content active">
+            <div class="about-section">
+                <div class="about-header">
+                    <h1>Nguyễn Đình Hiệp</h1>
+    
+                </div>
+
+                <div class="about-info">
+                    <div class="info-card">
+                        <h3>Ngày Sinh</h3>
+                        <p>11/12/2009</p>
+                    </div>
+                    <div class="info-card">
+                        <h3>Lớp</h3>
+                        <p>11 Tin</p>
+                    </div>
+                    <div class="info-card">
+                        <h3>Trường</h3>
+                        <p>THPT Chuyên Trần Phú</p>
+                    </div>
+                    <div class="info-card">
+                        <h3>Email</h3>
+                        <p>hiepdinhng11@gmail.com</p>
+                    </div>
+                </div>
+
+                <div class="about-description">
+                    <h2 style="color: #1a472a; margin-bottom: 1rem;">Về Tôi</h2>
+                    <p>
+                        Xin chào! Tôi là Nguyễn Đình Hiệp, một học sinh lớp 11 Tin tại THPT Chuyên Trần Phú. 
+                    </p>
+                    <p style="margin-top: 1rem;">
+                        Sở thích của tôi là chơi thể thao , đặc biệt là bộ môn bóng đá.Nếu bạn có chung sở thích thì hãy cũng nhau chơi nhé!!!
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div id="contact" class="tab-content">
+            <div class="contact-section">
+                <div class="contact-header">
+                    <h1>Liên Hệ Với Tôi</h1>
+                    <p>Hãy kết nối qua các nền tảng dưới đây</p>
+                </div>
+
+                <div class="contact-links">
+                    <div class="contact-card">
+                        <h3> Email</h3>
+                        <a href="mailto:hiepdinhng11@gmail.com">hiepdinhng11@gmail.com</a>
+                    </div>
+                    <div class="contact-card">
+                        <h3> Facebook</h3>
+                        <a href="https://www.facebook.com/damunel?locale=vi_VN" target="_blank">Kết Nối Facebook</a>
+                    </div>
+                    <div class="contact-card">
+                        <h3> Instagram</h3>
+                        <a href="https://www.instagram.com/pehid.gn/" target="_blank">Follow Instagram</a>
+                    </div>
+                    <div class="contact-card">
+                        <h3> TikTok</h3>
+                        <a href="https://www.tiktok.com/messages?lang=vi-VN" target="_blank">Kết Nối TikTok</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="songs" class="tab-content">
+            <div class="songs-section">
+                <div class="songs-header">
+                    <h1>Bài Hát Yêu Thích</h1>
+                    <p>Những bài hát ưa thích của tôi</p>
+                </div>
+
+                <div class="songs-grid">
+                    <div class="song-card">
+                        <div class="song-image">
+                            <img src="/choanhnhe.jpg" alt="Hoàng Dũng - Chờ Anh Nhé" />
+                        </div>
+                        <div class="song-info">
+                            <h3>Chờ Anh Nhé</h3>
+                            <p>Hoàng Dũng</p>
+                            <div class="song-player">
+                                <audio controls>
+                                    <source src="Chờ Anh Nhé.mp3" type="audio/mpeg">
+                                </audio>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="songs-grid">
+                    <div class="song-card">
+                        <div class="song-image">
+                            <img src="/yeuduoi.jpg" alt="Hoàng Dũng - Chờ Anh Nhé" />
+                        </div>
+                        <div class="song-info">
+                            <h3>Yếu đuối</h3>
+                            <p>Hoàng Dũng</p>
+                            <div class="song-player">
+                                <audio controls>
+                                    <source src="Yếu Đuối.mp3" type="audio/mpeg">
+                                </audio>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="songs-grid">
+                    <div class="song-card">
+                        <div class="song-image">
+                            <img src="/doiloi.jpg" alt="Hoàng Dũng - Chờ Anh Nhé" />
+                        </div>
+                        <div class="song-info">
+                            <h3>Đôi lời</h3>
+                            <p>Hoàng Dũng</p>
+                            <div class="song-player">
+                                <audio controls>
+                                    <source src="Đôi Lời.mp3" type="audio/mpeg">
+                                </audio>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="songs-grid">
+                    <div class="song-card">
+                        <div class="song-image">
+                            <img src="/10ngannam.jpg" alt="Hoàng Dũng - Chờ Anh Nhé" />
+                        </div>
+                        <div class="song-info">
+                            <h3>10 ngàn năm</h3>
+                            <p>PC</p>
+                            <div class="song-player">
+                                <audio controls>
+                                    <source src="10 Ngàn Năm.mp3" type="audio/mpeg">
+                                </audio>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="songs-grid">
+                    <div class="song-card">
+                        <div class="song-image">
+                            <img src="/lalung.jpg" alt="Hoàng Dũng - Chờ Anh Nhé" />
+                        </div>
+                        <div class="song-info">
+                            <h3>Lạ lùng</h3>
+                            <p>Vũ</p>
+                            <div class="song-player">
+                                <audio controls>
+                                    <source src="Lạ Lùng.mp3" type="audio/mpeg">
+                                </audio>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="songs-grid">
+                    <div class="song-card">
+                        <div class="song-image">
+                            <img src="/thembaonhieulau.jpg" alt="Hoàng Dũng - Chờ Anh Nhé" />
+                        </div>
+                        <div class="song-info">
+                            <h3>Thêm bao nhiêu lâu</h3>
+                            <p>ĐạtG</p>
+                            <div class="song-player">
+                                <audio controls>
+                                    <source src="Thêm Bao Nhiêu Lâu.mp3" type="audio/mpeg">
+                                </audio>
+                            </div>
+                        </div>
+                    </div>
+
+    <script>
+        // Tab switching functionality
+        const tabButtons = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons and contents
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+
+                // Add active class to clicked button and corresponding content
+                button.classList.add('active');
+                const tabId = button.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
